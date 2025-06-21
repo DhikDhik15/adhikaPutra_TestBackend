@@ -15,7 +15,7 @@ const getReservationByDate = (request, response) => {
     const requested_time = request.body.requested_time
     const duration_minutes = request.body.duration_minutes
     
-    pool.query('Select r.table_id from reservations r join users u on u.id = r.user_id join orders o on o.reservation_id = r.id where u.id = $1', [user_id], (error, results) => {                
+    pool.query('Select r.table_id from reservations r join users u on u.id = r.user_id join orders o on o.reservation_id = r.id join tables tab on r.table_id = tab.id where u.id = $1 and tab.capacity = $2', [user_id, party_size], (error, results) => {                        
         return response.status(200)
     })
 }
